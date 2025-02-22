@@ -32,7 +32,7 @@ export function Calendar() {
     };
 
     return (
-        <div style={{ width: "100%", height: "100%", overflow: "auto" }}>
+        <div style={{ width: "100%", height: "100%", paddingBottom: '15px'}}>
             <FullCalendar
                 plugins={[timeGridPlugin]}
                 locale={esLocale}
