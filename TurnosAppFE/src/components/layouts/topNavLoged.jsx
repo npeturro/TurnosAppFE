@@ -12,6 +12,12 @@ const TopNavBuscar = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
+    // Función para manejar la navegación y cerrar el drawer
+    const handleNavigate = (path) => {
+        navigate(path);
+        setOpen(false); // Cierra el drawer después de navegar
+    };
+
     return (
         <Box
             component="nav"
@@ -33,23 +39,39 @@ const TopNavBuscar = () => {
             {isMobile ? (
                 <Drawer open={open} onClose={() => setOpen(false)}>
                     <List>
-                        <ListItem><Button variant="plain" onClick={() => navigate(`/${establecimiento}/dashboard`)}>Dashboard</Button></ListItem>
-                        <ListItem><Button variant="plain" onClick={() => navigate(`/${establecimiento}/agenda`)}>Calendario</Button></ListItem>
-                        <ListItem><Button variant="plain" onClick={() => navigate(`/${establecimiento}/profesionales`)}>Profesionales</Button></ListItem>
-                        <ListItem><Button variant="plain" onClick={() => navigate(`/${establecimiento}/profesional`)}>Agregar profesional</Button></ListItem>
+                        <ListItem>
+                            <Button variant="plain" onClick={() => handleNavigate(`/${establecimiento}/dashboard`)}>
+                                Dashboard
+                            </Button>
+                        </ListItem>
+                        <ListItem>
+                            <Button variant="plain" onClick={() => handleNavigate(`/${establecimiento}/agenda`)}>
+                                Calendario
+                            </Button>
+                        </ListItem>
+                        <ListItem>
+                            <Button variant="plain" onClick={() => handleNavigate(`/${establecimiento}/profesionales`)}>
+                                Profesionales
+                            </Button>
+                        </ListItem>
+                        <ListItem>
+                            <Button variant="plain" onClick={() => handleNavigate(`/${establecimiento}/profesional`)}>
+                                Agregar profesional
+                            </Button>
+                        </ListItem>
                     </List>
                 </Drawer>
             ) : (
                 <Box sx={{ display: "flex", gap: 2 }}>
-                    <Button variant="plain" onClick={() => navigate(`/${establecimiento}/dashboard`)}>Dashboard</Button>
-                    <Button variant="plain" onClick={() => navigate(`/${establecimiento}/agenda`)}>Calendario</Button>
-                    <Button variant="plain" onClick={() => navigate(`/${establecimiento}/profesionales`)}>Profesionales</Button>
-                    <Button variant="plain" onClick={() => navigate(`/${establecimiento}/profesional`)}>Agregar profesional</Button>
+                    <Button variant="plain" onClick={() => handleNavigate(`/${establecimiento}/dashboard`)}>Dashboard</Button>
+                    <Button variant="plain" onClick={() => handleNavigate(`/${establecimiento}/agenda`)}>Calendario</Button>
+                    <Button variant="plain" onClick={() => handleNavigate(`/${establecimiento}/profesionales`)}>Profesionales</Button>
+                    <Button variant="plain" onClick={() => handleNavigate(`/${establecimiento}/profesional`)}>Agregar profesional</Button>
                 </Box>
             )}
 
             <Box sx={{ marginLeft: "auto" }}>
-                <Button variant="plain" onClick={() => navigate(`/${establecimiento}`)}>
+                <Button variant="plain" onClick={() => handleNavigate(`/${establecimiento}`)}>
                     Cerrar sesión
                 </Button>
             </Box>
