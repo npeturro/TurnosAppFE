@@ -5,8 +5,11 @@ import Index from "../pages";
 import MainLayoutPaciente from "../components/layouts/mainLayoutPaciente";
 import MainLayoutBuscar from "../components/layouts/mainLayoutBuscar";
 import Login from "../pages/login";
-import Administrador from "../pages/admin";
 import MainLayoutLoged from "../components/layouts/mainLayoutsLoged";
+import Profesional from "../pages/profesional";
+import Dashboard from "../pages/dashboard";
+import Agenda from "../pages/agenda";
+import Profesionales from "../pages/profesionales";
 
 const AppRoutes = () => {
     const router = createBrowserRouter([
@@ -19,10 +22,37 @@ const AppRoutes = () => {
             )
         },
         {
-            path: "/:establecimiento/inicio",
+            path: "/:establecimiento/dashboard",
             element: (
                 <MainLayoutLoged>
-                    <Administrador />
+                    <Dashboard />
+                </MainLayoutLoged>
+
+            )
+        },
+        {
+            path: "/:establecimiento/profesional",
+            element: (
+                <MainLayoutLoged>
+                    <Profesional />
+                </MainLayoutLoged>
+
+            )
+        },
+        {
+            path: "/:establecimiento/profesionales",
+            element: (
+                <MainLayoutLoged>
+                    <Profesionales />
+                </MainLayoutLoged>
+
+            )
+        },
+        {
+            path: "/:establecimiento/agenda",
+            element: (
+                <MainLayoutLoged>
+                    <Agenda />
                 </MainLayoutLoged>
 
             )

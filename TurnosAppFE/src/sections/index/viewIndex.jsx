@@ -38,7 +38,7 @@ export default function ViewIndex({ profesionales }) {
                                         render={({ field }) => (
                                             <Autocomplete
                                                 {...field}
-                                                placeholder="Selecciona un doctor"
+                                                placeholder="Selecciona un profesional"
                                                 options={profesionales}
                                                 sx={{ width: '100%' }}
                                                 getOptionLabel={(option) => option.profesional}

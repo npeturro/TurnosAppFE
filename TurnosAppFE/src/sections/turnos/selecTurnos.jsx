@@ -51,12 +51,14 @@ export default function SelecTurnos({ turnos }) {
     };
 
     const handleEventClick = (clickInfo) => {
+        const startDate = new Date(clickInfo.start); // Convertir a Date
+
         setSelectedEvent({
-            id: clickInfo.event.id,
-            title: clickInfo.event.title,
-            date: clickInfo.event.start.toLocaleDateString("es-ES"),
-            time: clickInfo.event.start.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" }),
-            especialidad: clickInfo.event.extendedProps.especialidad
+            id: clickInfo.id,
+            title: clickInfo.title,
+            date: startDate.toLocaleDateString("es-ES"),
+            time: startDate.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" }),
+            especialidad: clickInfo.especialidad
         });
         setOpen(true);
     };
@@ -76,7 +78,7 @@ export default function SelecTurnos({ turnos }) {
                 </IconButton>
             </Box>
             <Card sx={{ width: '100%', boxShadow: 'lg' }}>
-                <Box display="flex" gap={1} overflow="auto" pb={1} justifyContent="space-between">
+                <Box display="flex" gap={1} pb={1} justifyContent="space-between">
                     {days.map((day) => (
                         <Card
                             key={day.fullDate}
@@ -141,15 +143,13 @@ export default function SelecTurnos({ turnos }) {
                                 '&:hover': { bgcolor: 'success.600' }
                             }}
                             onClick={() => {
-                                const eventInfo = {
-                                    id: `${selectedDay.fullDate}-${option}`, // ID único basado en fecha y hora
-                                    title: 'Turno Disponible',
-                                    date: selectedDay.fullDate,
-                                    time: option.slice(0, -3),
-                                    especialidad: 'General', // Puedes cambiar esto según la especialidad real
-                                };
-                                setSelectedEvent(eventInfo);
-                                setOpen(true);
+                                const evento = eventos.find(event =>
+                                    event.start === `${selectedDay.fullDate} ${option}` && event.disponible
+                                );
+                                console.log(evento)
+                                if (evento) {
+                                    handleEventClick(evento); // ✅ Ahora enviamos el evento completo
+                                }
                             }}
                         >
                             {option.slice(0, -3)}

@@ -13,7 +13,7 @@ export default function MapCard({ profesionales }) {
     return (
         <Card>
             <div>
-                <Typography level="title-lg">Dermacenter</Typography>
+                <Typography level="h3">{profesionales[0].clinica}</Typography>
             </div>
             <AspectRatio minHeight="120px" maxHeight="200px">
                 <iframe

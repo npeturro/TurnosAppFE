@@ -115,16 +115,21 @@ export default function BioCard({ profesional }) {
 // Description.js
 import React from 'react';
 import { Sheet, Typography, Card, CardContent, Avatar } from '@mui/joy';
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
-export default function BioCard({profesional}) {
+export default function BioCard({ profesional }) {
   return (
     <Sheet variant="soft" sx={{ borderRadius: 'md', p: 2, mb: 2, width: '100%' }}>
       <Card sx={{ width: '100%', boxShadow: 'lg' }}>
         <CardContent sx={{ alignItems: 'center', textAlign: 'center' }}>
           <Avatar sx={{ '--Avatar-size': '4rem' }}>{profesional.profesional[0]}</Avatar>
-          <Typography level="title-lg">{profesional.profesional}</Typography>
-          <Typography level="body-sm" sx={{ maxWidth: '24ch' }}>
-            Aca una biografia opcional.
+          <Typography level="h2">{profesional.profesional}</Typography>
+          <Typography level="body-sm">
+            Soy un profesional comprometido con brindar atención de calidad, con años de experiencia en la medicina. Mi enfoque se basa en la empatía, la precisión y el uso de las mejores prácticas para garantizar el bienestar de mis pacientes. Siempre busco mantenerme actualizado con las últimas innovaciones en el campo, ofreciendo un servicio personalizado y orientado a las necesidades de cada persona. Estoy aquí para ayudarte a mejorar tu salud y calidad de vida.
+          </Typography>
+          <Typography level="body-sm" sx={{ display: 'flex', alignItems: 'center' }}>
+            <LocationOnOutlinedIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
+            Crespo 4427
           </Typography>
           <Typography level="body-sm" sx={{ maxWidth: '24ch' }}>
             <b>{profesional.clinica}</b>
