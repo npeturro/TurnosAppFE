@@ -1,9 +1,26 @@
 import React from "react";
-import { Box } from "@mui/joy";
+import { Box, CircularProgress, Typography } from "@mui/joy";
 import AgendaVista from "../sections/agenda/agendaVista";
 import ProfesionalesVista from "../sections/profesionales/profesionalesVista";
+import { useGET } from "../hooks/useGET";
+import LoadingCard from "../components/loadingCard";
+import ErrorCard from "../components/errorCard";
 
 const Profesionales = () => {
+
+    const [profesionales, loading, error] = useGET(`profesionales`);
+
+    if (loading) {
+        return (
+            <LoadingCard />
+        );
+    }
+
+    if (error) {
+        return (
+            <ErrorCard />
+        );
+    }
 
     return (
         <Box
@@ -17,7 +34,7 @@ const Profesionales = () => {
             }}
         >
             <Box sx={{ width: '100%' }}>
-                <ProfesionalesVista />
+                <ProfesionalesVista profesionales={profesionales} />
             </Box>
         </Box>
     );

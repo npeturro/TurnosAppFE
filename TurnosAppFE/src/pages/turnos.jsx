@@ -70,27 +70,23 @@ import BioCard from '../sections/turnos/bioCard';
 import SelecTurnos from '../sections/turnos/selecTurnos';
 import { useParams } from "react-router-dom";
 import { useGET } from "../hooks/useGET";
+import LoadingCard from '../components/loadingCard';
+import ErrorCard from '../components/errorCard';
 
 export default function AgendaDemo() {
     const { doctor } = useParams();
     const [profesional, loading, error] = useGET(`profesionales/${doctor}`);
     const [turnos, loadingTurnos, errorTurnos] = useGET(`turnos`);
 
-
     if (loading || loadingTurnos) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-                <CircularProgress />
-                <Typography marginLeft={2}>Cargando datos del profesional...</Typography>
-            </Box>
+            <LoadingCard />
         );
     }
 
     if (error || errorTurnos) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-                <Typography color="error">Error al cargar los datos</Typography>
-            </Box>
+            <ErrorCard />
         );
     }
 
@@ -108,7 +104,7 @@ export default function AgendaDemo() {
                 <BioCard profesional={profesional} />
             </Box>
             <Box sx={{ flex: 2 }}>
-                <SelecTurnos turnos={turnos}/>
+                <SelecTurnos turnos={turnos} />
             </Box>
         </Box>
     );

@@ -3,6 +3,8 @@ import ViewIndex from "../sections/index/viewIndex";
 import { Box, CircularProgress, Typography } from "@mui/joy";
 import MapCard from "../sections/index/mapCard";
 import { useGET } from "../hooks/useGET";
+import LoadingCard from "../components/loadingCard";
+import ErrorCard from "../components/errorCard";
 
 const Index = () => {
 
@@ -10,18 +12,13 @@ const Index = () => {
 
     if (loading) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-                <CircularProgress />
-                <Typography marginLeft={2}>Cargando datos...</Typography>
-            </Box>
+            <LoadingCard />
         );
     }
 
     if (error) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-                <Typography color="error">Error al cargar los datos</Typography>
-            </Box>
+            <ErrorCard />
         );
     }
 

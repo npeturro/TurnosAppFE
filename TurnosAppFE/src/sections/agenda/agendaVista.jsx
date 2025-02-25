@@ -23,7 +23,6 @@ const AgendaVista = ({ turnos }) => {
     }, []);
 
     const handleEventClick = (clickInfo) => {
-        console.log(clickInfo)
         setSelectedEvent({
             id: clickInfo.event.id,
             title: clickInfo.event.title,

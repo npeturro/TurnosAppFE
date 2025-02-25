@@ -1,22 +1,43 @@
 import React from "react";
-import { Box } from "@mui/joy";
-import DashboardItem from "../sections/dashboard/dashboardItem";
+import { Box, CircularProgress, Typography } from "@mui/joy";
+import { useGET } from "../hooks/useGET";
+import DoughnutDashboard from "../sections/dashboard/doughnutDashboard";
+import CardTotal from "../sections/dashboard/cardTotal";
+import LoadingCard from "../components/loadingCard";
+import ErrorCard from "../components/errorCard";
 
 const Dashboard = () => {
+
+    const [turnos, loading, error] = useGET(`turnos`);
+
+
+    if (loading) {
+        return (
+            <LoadingCard />
+        );
+    }
+
+    if (error) {
+        return (
+            <ErrorCard />
+        );
+    }
 
     return (
         <Box
             sx={{
                 display: 'flex',
-                flexDirection: 'column',
-                alignContent: 'center',
+                flexDirection: { xs: 'column', md: 'row' },
+                gap: 2,
+                p: 2,
                 width: '100%',
-                minHeight: '100vh',
-                p:2
             }}
         >
-            <Box sx={{ width: '100%' }}>
-                <DashboardItem />
+            <Box sx={{ flex: 2 }}>
+                <DoughnutDashboard turnos={turnos} />
+            </Box>
+            <Box sx={{ flex: 1 }}>
+                <CardTotal turnos={turnos} />
             </Box>
         </Box>
     );
