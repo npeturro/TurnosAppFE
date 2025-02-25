@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useGET } from "../hooks/useGET";
 import ErrorCard from "../components/errorCard";
 import LoadingCard from "../components/loadingCard";
+import themeColors from "../../public/theme/themeColors";
 
 const Agenda = () => {
 
@@ -32,7 +33,8 @@ const Agenda = () => {
                 alignContent: 'center',
                 width: '100%',
                 minHeight: '100vh',
-                p: 2
+                p: 2,
+                backgroundColor: themeColors.background
             }}
         >
             <Box sx={{ width: '100%' }}>

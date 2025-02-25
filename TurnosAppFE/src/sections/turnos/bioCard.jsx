@@ -10,6 +10,7 @@ export default function BioCard({ profesional }) {
         <CardContent sx={{ alignItems: 'center', textAlign: 'center' }}>
           <Avatar sx={{ '--Avatar-size': '4rem' }}>{profesional.profesional[0]}</Avatar>
           <Typography level="h2">{profesional.profesional}</Typography>
+          <Divider />
           <Typography level="body-sm">
             Soy un profesional comprometido con brindar atención de calidad, con años de experiencia en la medicina. Mi enfoque se basa en la empatía, la precisión y el uso de las mejores prácticas para garantizar el bienestar de mis pacientes.
           </Typography>

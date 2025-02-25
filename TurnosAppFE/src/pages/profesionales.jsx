@@ -5,6 +5,7 @@ import ProfesionalesVista from "../sections/profesionales/profesionalesVista";
 import { useGET } from "../hooks/useGET";
 import LoadingCard from "../components/loadingCard";
 import ErrorCard from "../components/errorCard";
+import themeColors from "../../public/theme/themeColors";
 
 const Profesionales = () => {
 
@@ -30,7 +31,8 @@ const Profesionales = () => {
                 alignContent: 'center',
                 width: '100%',
                 minHeight: '100vh',
-                p: 2
+                p: 2,
+                backgroundColor: themeColors.background
             }}
         >
             <Box sx={{ width: '100%' }}>

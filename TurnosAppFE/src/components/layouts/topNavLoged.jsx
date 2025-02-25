@@ -4,7 +4,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate, useParams } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/joy";
-
+import themeColors from "../../../public/theme/themeColors";
 const TopNavBuscar = () => {
     const { establecimiento } = useParams();
     const navigate = useNavigate();
@@ -25,8 +25,8 @@ const TopNavBuscar = () => {
                 display: "flex",
                 alignItems: "center",
                 padding: 2,
-                backgroundColor: "background.surface",
                 boxShadow: "sm",
+                backgroundColor: themeColors.neutral
             }}
         >
             {/* Menú para mobile */}

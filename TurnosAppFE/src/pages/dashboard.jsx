@@ -5,6 +5,7 @@ import DoughnutDashboard from "../sections/dashboard/doughnutDashboard";
 import CardTotal from "../sections/dashboard/cardTotal";
 import LoadingCard from "../components/loadingCard";
 import ErrorCard from "../components/errorCard";
+import themeColors from "../../public/theme/themeColors";
 
 const Dashboard = () => {
 
@@ -31,6 +32,7 @@ const Dashboard = () => {
                 gap: 2,
                 p: 2,
                 width: '100%',
+                backgroundColor: themeColors.background
             }}
         >
             <Box sx={{ flex: 2 }}>

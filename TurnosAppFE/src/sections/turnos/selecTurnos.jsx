@@ -7,13 +7,13 @@ import { es } from 'date-fns/locale';
 import { useTheme } from '@mui/joy';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import EventModal from './eventModal';
+import themeColors from '../../../public/theme/themeColors';
 
 export default function SelecTurnos({ turnos }) {
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const eventos = (turnos);
-
     const [currentWeek, setCurrentWeek] = useState(startOfWeek(new Date(), { weekStartsOn: 1 })); // Lunes como inicio de semana
     const [selectedDay, setSelectedDay] = useState(null);
     const [days, setDays] = useState([]);
@@ -91,7 +91,7 @@ export default function SelecTurnos({ turnos }) {
                                 p: 1,
                                 height: '140px',
                                 borderRadius: 'md',
-                                bgcolor: selectedDay?.fullDate === day.fullDate ? 'primary' : 'transparent',
+                                bgcolor: selectedDay?.fullDate === day.fullDate ? `${themeColors.select}` : 'transparent',
                                 color: selectedDay?.fullDate === day.fullDate ? '#fff' : 'inherit',
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -114,7 +114,7 @@ export default function SelecTurnos({ turnos }) {
                                         width: 8,
                                         height: 8,
                                         borderRadius: '50%',
-                                        bgcolor: 'success.500',
+                                        bgcolor: 'success.500'
                                     }}
                                 />
                             )}

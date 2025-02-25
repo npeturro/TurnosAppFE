@@ -72,6 +72,7 @@ import { useParams } from "react-router-dom";
 import { useGET } from "../hooks/useGET";
 import LoadingCard from '../components/loadingCard';
 import ErrorCard from '../components/errorCard';
+import themeColors from '../../public/theme/themeColors';
 
 export default function AgendaDemo() {
     const { doctor } = useParams();
@@ -98,6 +99,7 @@ export default function AgendaDemo() {
                 gap: 2,
                 p: 2,
                 width: '100%',
+                backgroundColor: themeColors.background
             }}
         >
             <Box sx={{ flex: 1 }}>

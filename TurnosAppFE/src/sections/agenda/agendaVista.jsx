@@ -5,9 +5,12 @@ import esLocale from "@fullcalendar/core/locales/es";
 import { Box, CircularProgress, Typography, Card } from "@mui/joy";
 import EventModal from "../turnos/eventModal";
 import DetallesModal from "./detallesModal";
+import AlertDeleteModal from "../../components/modals/alertDeleteModal";
+import AlertCancelModal from "../../components/modals/alertCancelTurno";
 
 const AgendaVista = ({ turnos }) => {
     const [open, setOpen] = useState(false);
+    const [openCancelar, setOpenCancelar] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [calendarView, setCalendarView] = useState(
         window.innerWidth < 768 ? "timeGridDay" : "timeGridWeek"
@@ -21,6 +24,10 @@ const AgendaVista = ({ turnos }) => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+    const handleCancelar = () => {
+        setOpenCancelar(true);
+    };
 
     const handleEventClick = (clickInfo) => {
         setSelectedEvent({
@@ -76,7 +83,8 @@ const AgendaVista = ({ turnos }) => {
                     eventContent={renderEventContent}
                     eventClick={handleEventClick}
                 />
-                <DetallesModal open={open} setOpen={setOpen} selectedEvent={selectedEvent} />
+                <DetallesModal open={open} setOpen={setOpen} selectedEvent={selectedEvent} handleCancelar={handleCancelar}/>
+                <AlertCancelModal open={openCancelar} setOpen={setOpenCancelar}/>
             </Card>
         </Box>
     );

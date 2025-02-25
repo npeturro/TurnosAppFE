@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, CircularProgress, Typography } from "@mui/joy";
+import themeColors from "../../public/theme/themeColors";
 
 const LoadingCard = () => {
 

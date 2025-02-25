@@ -5,6 +5,7 @@ import MapCard from "../sections/index/mapCard";
 import { useGET } from "../hooks/useGET";
 import LoadingCard from "../components/loadingCard";
 import ErrorCard from "../components/errorCard";
+import themeColors from "../../public/theme/themeColors";
 
 const Index = () => {
 
@@ -30,6 +31,7 @@ const Index = () => {
                 gap: 2,
                 p: 2,
                 width: '100%',
+                backgroundColor: themeColors.background
             }}
         >
             <Box sx={{ flex: 1 }}>

@@ -73,3 +73,12 @@ button:focus-visible {
 body {
   font-family: 'PlusJakarta', Arial, sans-serif;
 } */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+
+* {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+:root, body, html {
+  background-color: #fafafa;
+}

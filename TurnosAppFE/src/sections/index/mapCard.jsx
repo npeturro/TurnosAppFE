@@ -8,6 +8,7 @@ import Typography from '@mui/joy/Typography';
 import Avatar from '@mui/joy/Avatar';
 import Stack from '@mui/joy/Stack';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 export default function MapCard({ profesionales }) {
     return (
@@ -30,6 +31,10 @@ export default function MapCard({ profesionales }) {
                 <Typography level="body-sm" sx={{ display: 'flex', alignItems: 'center' }}>
                     <LocationOnOutlinedIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
                     Crespo 4427
+                </Typography>
+                <Typography level="body-sm" sx={{ display: 'flex', alignItems: 'center' }}>
+                    <LocalPhoneIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
+                    341 - 5478407
                 </Typography>
 
                 <Typography level="body-sm"><b>Profesionales</b></Typography>

@@ -2,6 +2,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, IconButton } from "@mui/joy";
 import MenuIcon from "@mui/icons-material/Menu";
+import themeColors from "../../../public/theme/themeColors";
 
 const TopNavBuscar = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ const TopNavBuscar = () => {
                 display: "flex",
                 alignItems: "center",
                 padding: 2,
-                backgroundColor: "background.surface",
+                backgroundColor: themeColors.neutral,
                 boxShadow: "sm",
             }}
         >

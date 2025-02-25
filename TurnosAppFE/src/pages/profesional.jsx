@@ -4,6 +4,7 @@ import { Box, CircularProgress, Typography } from "@mui/joy";
 import MapCard from "../sections/index/mapCard";
 import { useGET } from "../hooks/useGET";
 import NuevoProfesional from "../sections/profesional/nuevoProfesional";
+import themeColors from "../../public/theme/themeColors";
 
 const Profesional = () => {
 
@@ -15,7 +16,8 @@ const Profesional = () => {
                 alignContent: 'center',
                 width: '100%',
                 minHeight: '100vh',
-                p:2
+                p:2,
+                backgroundColor: themeColors.background
             }}
         >
             <Box sx={{ width: '100%' }}>
