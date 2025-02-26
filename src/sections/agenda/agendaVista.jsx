@@ -2,31 +2,36 @@ import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import esLocale from "@fullcalendar/core/locales/es";
-import { Box, CircularProgress, Typography, Card } from "@mui/joy";
+import { Box, CircularProgress, Typography, Card, Button, Input } from "@mui/joy";
 import EventModal from "../turnos/eventModal";
 import DetallesModal from "./detallesModal";
-import AlertDeleteModal from "../../components/modals/alertDeleteModal";
 import AlertCancelModal from "../../components/modals/alertCancelTurno";
+import { toast } from "sonner";
+import LoadingCard from "../../components/loadingCard";
 
-const AgendaVista = ({ turnos }) => {
+const AgendaVista = ({ turnos, actualizarTurnos }) => {
     const [open, setOpen] = useState(false);
     const [openCancelar, setOpenCancelar] = useState(false);
+    const [openReservar, setOpenReservar] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [calendarView, setCalendarView] = useState(
-        window.innerWidth < 768 ? "timeGridDay" : "timeGridWeek"
-    );
+    const [calendarView, setCalendarView] = useState(window.innerWidth < 768 ? "timeGridDay" : "timeGridWeek");
+    const [loadingBloqueo, setLoadingBloqueo] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]); // Estado para la fecha
 
     useEffect(() => {
         const handleResize = () => {
             setCalendarView(window.innerWidth < 768 ? "timeGridDay" : "timeGridWeek");
         };
-
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     const handleCancelar = () => {
         setOpenCancelar(true);
+    };
+
+    const handleReservar = () => {
+        setOpenReservar(true);
     };
 
     const handleEventClick = (clickInfo) => {
@@ -43,18 +48,47 @@ const AgendaVista = ({ turnos }) => {
         setOpen(true);
     };
 
+    const handleBloquearDia = async () => {
+        setLoadingBloqueo(true);
+
+        const turnosBloqueados = turnos.map(turno =>
+            turno.start.split(" ")[0] === selectedDate
+                ? { ...turno, disponible: false }
+                : turno
+        );
+
+        try {
+            toast.success(`Todos los turnos del ${selectedDate} han sido cancelados.`);
+        } catch (error) {
+            toast.error("Error al bloquear los turnos.");
+        } finally {
+            setLoadingBloqueo(false);
+        }
+    };
+
     if (!turnos) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-                <CircularProgress />
-                <Typography marginLeft={2}>Cargando turnos...</Typography>
-            </Box>
+            <LoadingCard />
         );
     }
 
     return (
         <Box>
-            <Card sx={{ boxShadow: "lg" }}>
+            <Card sx={{ boxShadow: "lg", padding: 2 }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: 2, alignItems: "center" }}>
+                    <Typography level="h4">Agenda</Typography>
+
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <Input
+                            type="date"
+                            value={selectedDate}
+                            onChange={(e) => setSelectedDate(e.target.value)}
+                        />
+                        <Button onClick={handleBloquearDia} loading={loadingBloqueo} color="danger">
+                            Cancelar día
+                        </Button>
+                    </Box>
+                </Box>
                 <FullCalendar
                     plugins={[timeGridPlugin]}
                     locale={esLocale}
@@ -67,7 +101,7 @@ const AgendaVista = ({ turnos }) => {
                         disponible: turno.disponible,
                         pacienteNombre: turno.pacienteNombre,
                         pacienteCorreo: turno.pacienteCorreo,
-                        backgroundColor: turno.color || "#3788d8",
+                        backgroundColor: turno.disponible ? "#3788d8" : "#d32f2f",
                     }))}
                     weekends={false}
                     height="auto"
@@ -80,22 +114,14 @@ const AgendaVista = ({ turnos }) => {
                         hour12: false,
                     }}
                     headerToolbar={{ left: "prev,next today", center: "title", right: "timeGridWeek,timeGridDay" }}
-                    eventContent={renderEventContent}
                     eventClick={handleEventClick}
                 />
-                <DetallesModal open={open} setOpen={setOpen} selectedEvent={selectedEvent} handleCancelar={handleCancelar}/>
-                <AlertCancelModal open={openCancelar} setOpen={setOpenCancelar}/>
+                <DetallesModal open={open} setOpen={setOpen} selectedEvent={selectedEvent} handleCancelar={handleCancelar} handleReservar={handleReservar} />
+                <AlertCancelModal open={openCancelar} setOpen={setOpenCancelar} />
+                <EventModal open={openReservar} setOpen={setOpenReservar} selectedEvent={selectedEvent} />
             </Card>
         </Box>
     );
 };
-
-function renderEventContent(eventInfo) {
-    return (
-        <div>
-            {eventInfo.timeText} - {eventInfo.event.title}
-        </div>
-    );
-}
 
 export default AgendaVista;

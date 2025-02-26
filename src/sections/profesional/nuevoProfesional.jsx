@@ -1,97 +1,95 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { Modal, ModalDialog, Typography, Button, Input, CircularProgress, Option, Box, Card } from "@mui/joy";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Box, Card, Input, Typography, Button, Checkbox } from "@mui/joy";
 import { toast } from "sonner";
-import axios from "axios";
+
+const diasSemana = [
+    { id: 1, nombre: "Lunes" },
+    { id: 2, nombre: "Martes" },
+    { id: 3, nombre: "Miércoles" },
+    { id: 4, nombre: "Jueves" },
+    { id: 5, nombre: "Viernes" },
+    { id: 6, nombre: "Sábado" },
+    { id: 7, nombre: "Domingo" },
+];
 
 const NuevoProfesional = () => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const [loading, setLoading] = React.useState(false);
+    const { register, handleSubmit, control, formState: { errors }, reset } = useForm();
+    const [loading, setLoading] = useState(false);
+    const [horarios, setHorarios] = useState(diasSemana.map(dia => ({ daysOfWeek: [dia.id], startTime: "", endTime: "" })));
+
+    const actualizarHorario = (index, field, value) => {
+        const nuevosHorarios = [...horarios];
+        nuevosHorarios[index][field] = value;
+        setHorarios(nuevosHorarios);
+    };
 
     const onSubmit = async (data) => {
-
         setLoading(true);
+        const horariosFiltrados = horarios.filter(h => h.startTime && h.endTime);
+
+        const nuevoProfesional = {
+            profesional: data.nombre,
+            especialidad: data.especialidad,
+            clinica: data.clinica,
+            activo: data.activo,
+            businessHours: horariosFiltrados
+        };
 
         try {
-
-            console.log("Datos actualizados:", response.data);
-            toast.success("Turno reservado con éxito!");
-
-            reset(); // Limpia el formulario
-
+            console.log("Datos a enviar:", nuevoProfesional);
+            toast.success("Profesional creado con éxito!");
+            reset();
+            setHorarios(diasSemana.map(dia => ({ daysOfWeek: [dia.id], startTime: "", endTime: "" })));
         } catch (error) {
-            if (error.response) {
-                // Respuesta con error del servidor (4xx, 5xx)
-                console.error("Error del servidor:", error.response.data);
-                toast.error(`Error: ${error.response.data.message || "No se pudo reservar el turno."}`);
-            } else if (error.request) {
-                // No hubo respuesta del servidor
-                console.error("No se recibió respuesta del servidor.");
-                toast.error("No se pudo conectar con el servidor.");
-            } else {
-                // Otro tipo de error
-                console.error("Error desconocido:", error.message);
-                toast.error("Ocurrió un error inesperado.");
-            }
+            toast.error("Error al crear el profesional.");
         } finally {
             setLoading(false);
         }
     };
 
-
     return (
-
-        <Box >
-            <Card sx={{ boxShadow: "lg" }}>
+        <Box>
+            <Card sx={{ boxShadow: "lg", p: 3 }}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 2 }}>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
+                        <Input fullWidth placeholder="Nombre y apellido" {...register("nombre", { required: "El nombre es obligatorio" })} />
+                        {errors.nombre && <Typography color="danger">{errors.nombre.message}</Typography>}
 
-                        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                            <Input
-                                fullWidth
-                                placeholder="Nombre y apellido"
-                                {...register("nombre", { required: "El nombre y apellido es obligatorio" })}
-                            />
-                            {errors.nombre && <Typography color="danger">{errors.nombre.message}</Typography>}
+                        <Input fullWidth placeholder="Especialidad" {...register("especialidad", { required: "La especialidad es obligatoria" })} />
+                        {errors.especialidad && <Typography color="danger">{errors.especialidad.message}</Typography>}
 
-                            <Input
-                                fullWidth
-                                placeholder="Email"
-                                type="email"
-                                {...register("email", { required: "El email es obligatorio" })}
-                            />
-                            {errors.email && <Typography color="danger">{errors.email.message}</Typography>}
+                        <Input fullWidth placeholder="Clínica" {...register("clinica", { required: "La clínica es obligatoria" })} />
+                        {errors.clinica && <Typography color="danger">{errors.clinica.message}</Typography>}
 
-                            <Input
-                                fullWidth
-                                placeholder="Clínica"
-                                {...register("clinica", { required: "La clínica es obligatorio" })}
-                            />
-                            {errors.clinica && <Typography color="danger">{errors.clinica.message}</Typography>}
+                        <Controller name="activo" control={control} defaultValue={true} render={({ field }) => (
+                            <Checkbox {...field} label="Activo" checked={field.value} />
+                        )} />
 
-                            <Input
-                                fullWidth
-                                type="number"
-                                placeholder="Celular"
-                                {...register("celular", { required: "El celular es obligatorio" })}
-                            />
-                            {errors.celular && <Typography color="danger">{errors.celular.message}</Typography>}
+                        <Typography sx={{ mt: 2, fontWeight: "bold" }}>Horarios de atención:</Typography>
+                        <Box sx={{
+                            display: "grid",
+                            gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr" },
+                            gap: 2
+                        }}>
+                            {horarios.map((horario, index) => (
+                                <Box key={index} sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                                    <Typography>{diasSemana[index].nombre}</Typography>
+                                    <Input type="time" value={horario.startTime} onChange={(e) => actualizarHorario(index, "startTime", e.target.value)} />
+                                    <Input type="time" value={horario.endTime} onChange={(e) => actualizarHorario(index, "endTime", e.target.value)} />
+                                </Box>
+                            ))}
                         </Box>
 
-                        <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 2, flexWrap: "wrap" }}>
-                            <Button
-                                type="submit"
-                                sx={{ minWidth: "120px" }}
-                            >
-                                Crear
+                        <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 2 }}>
+                            <Button type="submit" sx={{ minWidth: "120px" }} disabled={loading}>
+                                {loading ? "Guardando..." : "Crear"}
                             </Button>
-
                         </Box>
                     </Box>
                 </form>
             </Card>
         </Box>
-
     );
 };
 

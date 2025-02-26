@@ -146,9 +146,8 @@ export default function SelecTurnos({ turnos }) {
                                 const evento = eventos.find(event =>
                                     event.start === `${selectedDay.fullDate} ${option}` && event.disponible
                                 );
-                                console.log(evento)
                                 if (evento) {
-                                    handleEventClick(evento); // ✅ Ahora enviamos el evento completo
+                                    handleEventClick(evento);
                                 }
                             }}
                         >
