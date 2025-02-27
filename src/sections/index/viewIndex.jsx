@@ -30,20 +30,22 @@ export default function ViewIndex({ profesionales }) {
                         <Stack spacing={2}>
                             {/* Grid para los campos uno al lado del otro */}
                             <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
+                                <Grid xs={12} sm={6}>
                                     <Controller
                                         name="doctor"
                                         control={control}
+                                        defaultValue={null} 
                                         rules={{ required: "El campo doctor es obligatorio" }}
                                         render={({ field }) => (
                                             <Autocomplete
                                                 {...field}
+                                                value={profesionales.find(p => p.id === field.value) || null} 
                                                 placeholder="Selecciona un profesional"
                                                 options={profesionales}
                                                 sx={{ width: '100%' }}
                                                 getOptionLabel={(option) => option.profesional}
                                                 isOptionEqualToValue={(option, value) => option.id === value?.id}
-                                                onChange={(_, newValue) => setValue('doctor', newValue?.id || '')}
+                                                onChange={(_, newValue) => field.onChange(newValue?.id || null)} 
                                                 renderTags={(tags, getTagProps) =>
                                                     tags.map((item, index) => (
                                                         <Chip
@@ -60,23 +62,26 @@ export default function ViewIndex({ profesionales }) {
                                             />
                                         )}
                                     />
+
                                     {errors.doctor && <Typography color="error" fontSize="sm">{errors.doctor.message}</Typography>}
                                 </Grid>
 
-                                <Grid item xs={12} sm={6}>
+                                <Grid xs={12} sm={6}>
                                     <Controller
                                         name="especialidad"
                                         control={control}
+                                        defaultValue={null}
                                         rules={{ required: "El campo especialidad es obligatorio" }}
                                         render={({ field }) => (
                                             <Autocomplete
                                                 {...field}
+                                                value={especialidad.find(e => e.id === field.value) || null}
                                                 placeholder="Selecciona una especialidad"
                                                 options={especialidad}
                                                 sx={{ width: '100%' }}
                                                 getOptionLabel={(option) => option.name}
                                                 isOptionEqualToValue={(option, value) => option.id === value?.id}
-                                                onChange={(_, newValue) => setValue('especialidad', newValue?.id || '')}
+                                                onChange={(_, newValue) => field.onChange(newValue?.id || null)}
                                                 renderTags={(tags, getTagProps) =>
                                                     tags.map((item, index) => (
                                                         <Chip
