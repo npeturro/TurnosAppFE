@@ -12,11 +12,16 @@ const TopNavBuscar = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-    // Función para manejar la navegación y cerrar el drawer
     const handleNavigate = (path) => {
+        if (path === `/${establecimiento}`) {
+            localStorage.removeItem("usuario"); 
+            localStorage.removeItem("token"); 
+        }
         navigate(path);
         setOpen(false); // Cierra el drawer después de navegar
     };
+
+
 
     return (
         <Box

@@ -1,14 +1,36 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Box, Button, Checkbox, FormControl, FormLabel, Input, Typography, Link, Card } from "@mui/joy";
-
+import usuarios from "../../../public/user";
 
 const LoginForm = ({ establecimiento }) => {
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setError } = useForm();
 
-    const onSubmit = (data) => {
+    const handleLogin = (data) => {
+        const usuario = usuarios.find(user => user.email === data.email);
+
+        if (!usuario) {
+            setError("email", { type: "manual", message: "El correo no está registrado" });
+            return;
+        }
+
+        // if (data.password !== `password${usuario.id}`) { // Simulación de contraseña
+        //     setError("password", { type: "manual", message: "Contraseña incorrecta" });
+        //     return;
+        // }
+
+        // Simulación de token
+        const token = `fake-token-${usuario.id}-${Date.now()}`;
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("usuario", JSON.stringify({
+            id: usuario.id,
+            rol: usuario.rol,
+            email: usuario.email
+        }));
+
         navigate(`/${establecimiento}/dashboard`);
     };
 
@@ -18,7 +40,7 @@ const LoginForm = ({ establecimiento }) => {
                 <Typography level="h4" textAlign="center" fontWeight="lg">
                     Inicia sesión en tu cuenta
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 2 }}>
+                <Box component="form" onSubmit={handleSubmit(handleLogin)} sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 2 }}>
                     <FormControl error={!!errors.email}>
                         <FormLabel>Correo electrónico</FormLabel>
                         <Input

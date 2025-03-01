@@ -37,7 +37,7 @@ export default function MapCard({ profesionales }) {
                     341 - 5478407
                 </Typography>
 
-                <Typography level="body-sm"><b>Profesionales</b></Typography>
+                {/* <Typography level="body-sm"><b>Profesionales</b></Typography>
                 <Stack direction="row" spacing={2} sx={{ mt: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
                     {profesionales.map((prof, index) => (
                         <Stack key={index} alignItems="center" spacing={0.5}>
@@ -45,7 +45,7 @@ export default function MapCard({ profesionales }) {
                             <Typography level="body-sm">{prof.profesional}</Typography>
                         </Stack>
                     ))}
-                </Stack>
+                </Stack> */}
             </CardContent>
         </Card >
     );

@@ -138,9 +138,9 @@ export default function SelecTurnos({ turnos }) {
                             sx={{
                                 m: 0.5,
                                 minWidth: '80px',
-                                bgcolor: 'success.500',
+                                bgcolor: themeColors.select,
                                 color: '#fff',
-                                '&:hover': { bgcolor: 'success.600' }
+                                '&:hover': { bgcolor: themeColors.selectHover }
                             }}
                             onClick={() => {
                                 const evento = eventos.find(event =>
