@@ -12,6 +12,7 @@ import Agenda from "../pages/agenda";
 import Profesionales from "../pages/profesionales";
 import { useGET } from "../hooks/useGET";
 import NotFound from "../pages/notFound";
+import MisTurnos from "../pages/misTurnos";
 
 ////////////////////// POR EL MOMENTO ESTO NO LO USO PORQUE NO TENGO MAS API FREE. PERO ESTA FUNCIONANDO, VALIDA POR DB QUE EXISTA EL ESTABLECIMIENTO
 // const VerificarDatabase = ({ children }) => {
@@ -93,6 +94,16 @@ const AppRoutes = () => {
                 <VerificarDatabase>
                     <MainLayoutPaciente>
                         <Login />
+                    </MainLayoutPaciente>
+                </VerificarDatabase>
+            )
+        },
+        {
+            path: "/:establecimiento/turnos",
+            element: (
+                <VerificarDatabase>
+                    <MainLayoutPaciente>
+                        <MisTurnos />
                     </MainLayoutPaciente>
                 </VerificarDatabase>
             )

@@ -8,6 +8,7 @@ import DetallesModal from "./detallesModal";
 import AlertCancelModal from "../../components/modals/alertCancelTurno";
 import { toast } from "sonner";
 import LoadingCard from "../../components/loadingCard";
+import ConfirmModal from "../turnos/confirmModal";
 
 const AgendaVista = ({ turnos, actualizarTurnos }) => {
     const [open, setOpen] = useState(false);
@@ -17,6 +18,7 @@ const AgendaVista = ({ turnos, actualizarTurnos }) => {
     const [calendarView, setCalendarView] = useState(window.innerWidth < 768 ? "timeGridDay" : "timeGridWeek");
     const [loadingBloqueo, setLoadingBloqueo] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]); // Estado para la fecha
+    const [openConfirm, setOpenConfirm] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -32,6 +34,7 @@ const AgendaVista = ({ turnos, actualizarTurnos }) => {
 
     const handleReservar = () => {
         setOpenReservar(true);
+        setOpen(false);
     };
 
     const handleEventClick = (clickInfo) => {
@@ -118,7 +121,8 @@ const AgendaVista = ({ turnos, actualizarTurnos }) => {
                 />
                 <DetallesModal open={open} setOpen={setOpen} selectedEvent={selectedEvent} handleCancelar={handleCancelar} handleReservar={handleReservar} />
                 <AlertCancelModal open={openCancelar} setOpen={setOpenCancelar} />
-                <EventModal open={openReservar} setOpen={setOpenReservar} selectedEvent={selectedEvent} />
+                <ConfirmModal open={openConfirm} setOpen={setOpenConfirm} />
+                <EventModal open={openReservar} setOpen={setOpenReservar} setOpenDetalles={setOpen} openConfirm={openConfirm} setOpenConfirm={setOpenConfirm} selectedEvent={selectedEvent} />
             </Card>
         </Box>
     );

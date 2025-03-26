@@ -8,6 +8,7 @@ import { useTheme } from '@mui/joy';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import EventModal from './eventModal';
 import themeColors from '../../../public/theme/themeColors';
+import ConfirmModal from './confirmModal';
 
 export default function SelecTurnos({ turnos }) {
 
@@ -19,6 +20,7 @@ export default function SelecTurnos({ turnos }) {
     const [days, setDays] = useState([]);
     const [open, setOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [openConfirm, setOpenConfirm] = useState(false);
 
     useEffect(() => {
         generateWeekDays(currentWeek);
@@ -156,7 +158,8 @@ export default function SelecTurnos({ turnos }) {
                     ))}
                 </Box>
             </Card>
-            <EventModal open={open} setOpen={setOpen} selectedEvent={selectedEvent} />
+            <ConfirmModal open={openConfirm} setOpen={setOpenConfirm} />
+            <EventModal open={open} setOpen={setOpen} openConfirm={openConfirm} setOpenConfirm={setOpenConfirm} selectedEvent={selectedEvent} />
         </Box>
 
     );

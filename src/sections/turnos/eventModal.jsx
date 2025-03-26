@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import { Modal, ModalDialog, Typography, Button, Input, CircularProgress, Option, Box } from "@mui/joy";
 import { toast } from "sonner";
 import axios from "axios";
+import ConfirmModal from "./confirmModal";
 
-const EventModal = ({ open, setOpen, selectedEvent }) => {
+const EventModal = ({ open, setOpen, openConfirm, setOpenConfirm, setOpenDetalles, selectedEvent }) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [loading, setLoading] = React.useState(false);
 
@@ -17,29 +18,29 @@ const EventModal = ({ open, setOpen, selectedEvent }) => {
         setLoading(true);
 
         try {
-            const response = await axios.put(
-                `https://67ba591efbe0387ca1372908.mockapi.io/turnos/turnos`,
-                {
-                    id: selectedEvent.id,
-                    disponible: false,
-                    pacienteNombre: data.nombre,
-                    pacienteCorreo: data.email,
-                    pacienteDni: data.dni,
-                    pacienteNac: data.nacimiento,
-                    pacienteObs: data.observaciones
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
+            // const response = await axios.put(
+            //     `https://67ba591efbe0387ca1372908.mockapi.io/turnos/turnos`,
+            //     {
+            //         id: selectedEvent.id,
+            //         disponible: false,
+            //         pacienteNombre: data.nombre,
+            //         pacienteCorreo: data.email,
+            //         pacienteDni: data.dni,
+            //         pacienteNac: data.nacimiento,
+            //         pacienteObs: data.observaciones
+            //     },
+            //     {
+            //         headers: {
+            //             "Content-Type": "application/json"
+            //         }
+            //     }
+            // );
 
-            console.log("Datos actualizados:", response.data);
-            toast.success("Turno reservado con éxito!");
-
-            reset(); // Limpia el formulario
-            setOpen(false); // Cierra el modal
+            // console.log("Datos actualizados:", response.data);
+            // toast.success("Turno reservado con éxito!");
+            setOpenConfirm(true)
+            reset();
+            setOpen(false); 
         } catch (error) {
             if (error.response) {
                 // Respuesta con error del servidor (4xx, 5xx)

@@ -24,16 +24,24 @@ export default function BioCard({ profesional }) {
           <Typography level="title-sm" mb={1} sx={{ fontWeight: "bold" }}>
             Horarios de Atención:
           </Typography>
-          <Box sx={{ maxHeight: "150px", overflowY: "auto" }}>
-            {profesional.businessHours.map((schedule, index) => (
+          <Box sx={{ maxHeight: "150px", overflowY: "auto" }}> 
+            {/* Lo arme asi x si tiene horarios cortados  */}
+            {Object.entries(
+              profesional.businessHours.reduce((acc, schedule) => {
+                const day = daysMap[schedule.daysOfWeek[0]];
+                if (!acc[day]) acc[day] = [];
+                acc[day].push(`${schedule.startTime} - ${schedule.endTime}`);
+                return acc;
+              }, {})
+            ).map(([day, hours], index) => (
               <Box key={index} sx={{ mb: 1 }}>
                 <Typography level="body-sm">
-                  <b>{daysMap[schedule.daysOfWeek[0]]}:</b> {schedule.startTime} - {schedule.endTime}
+                  <b>{day}:</b> {hours.join(" | ")}
                 </Typography>
-                {index !== profesional.businessHours.length - 1}
               </Box>
             ))}
           </Box>
+
         </CardContent>
       </Card>
     </Sheet>

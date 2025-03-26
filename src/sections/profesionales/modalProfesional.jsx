@@ -48,7 +48,7 @@ const ModalProfesional = ({ open, setOpen, handleDelete, handleDesHab, selectedP
                             </Chip>
                         </Box>
 
-                        {/* Especialidad y Clínica */}
+                        {/* VER DSP si es establecimiento y profesion quizas */}
                         <Stack spacing={1} mb={2}>
                             <Typography level="body-sm">
                                 <b>Especialidad:</b> {selectedProfesional.especialidad}
@@ -58,20 +58,28 @@ const ModalProfesional = ({ open, setOpen, handleDelete, handleDesHab, selectedP
                             </Typography>
                         </Stack>
 
-                        {/* Horarios de atención */}
+                        {/* Horarios de at */}
                         <Typography level="title-sm" mb={1} sx={{ fontWeight: "bold" }}>
                             Horarios de Atención:
                         </Typography>
                         <Box sx={{ maxHeight: "150px", overflowY: "auto" }}>
-                            {selectedProfesional.businessHours.map((schedule, index) => (
+                            {Object.entries(
+                                selectedProfesional.businessHours.reduce((acc, schedule) => {
+                                    const day = daysMap[schedule.daysOfWeek[0]];
+                                    if (!acc[day]) acc[day] = [];
+                                    acc[day].push(`${schedule.startTime} - ${schedule.endTime}`);
+                                    return acc;
+                                }, {})
+                            ).map(([day, hours], index, array) => (
                                 <Box key={index} sx={{ mb: 1 }}>
                                     <Typography level="body-sm">
-                                        <b>{daysMap[schedule.daysOfWeek[0]]}:</b> {schedule.startTime} - {schedule.endTime}
+                                        <b>{day}:</b> {hours.join(" | ")}
                                     </Typography>
-                                    {index !== selectedProfesional.businessHours.length - 1 && <Divider />}
+                                    {index !== array.length - 1 && <Divider />}
                                 </Box>
                             ))}
                         </Box>
+
 
                         {/* Botón de eliminar */}
                         <Box mt={3}>
@@ -95,7 +103,7 @@ const ModalProfesional = ({ open, setOpen, handleDelete, handleDesHab, selectedP
                                     startDecorator={<CheckIcon />}
                                     onClick={() => handleDesHab(true)}
                                     sx={{ mb: 2 }}>
-                                        
+
                                     Habilitar
                                 </Button>
 

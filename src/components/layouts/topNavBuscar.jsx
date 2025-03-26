@@ -24,6 +24,9 @@ const TopNavBuscar = () => {
             </IconButton>*/}
 
             <Box sx={{ marginLeft: "auto" }}>
+                <Button variant="plain" onClick={() => navigate("turnos")}>
+                    Mis turnos
+                </Button>
                 <Button variant="plain" onClick={() => navigate("login")}>
                     Iniciar sesión
                 </Button>
